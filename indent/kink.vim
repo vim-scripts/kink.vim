@@ -1,7 +1,7 @@
 " Vim indent file for Kink
 " Language:	Kink (http://code.google.com/p/kink-lang/)
 " Maintainer:	Miyakawa Taku <miyakawa.taku@gmail.com>
-" Last Change:  2013-06-11
+" Last Change:  2013-06-13
 
 " Copyright (c) 2013 Miyakawa Taku
 " 
@@ -73,12 +73,8 @@ function! GetKinkIndent(line_number)
   " Opening a paren/brace/brancket?
   call cursor(prev_line_number, 1)
   let search_option =  'cW'
-  while 1
-    let open_found = search('{\|\[\|(', search_option, prev_line_number) <= 0
+  while search('{\|\[\|(', search_option, prev_line_number) > 0
     let search_option = 'W'
-    if open_found
-      break
-    endif
     if has('syntax_items') && synIDattr(synID(prev_line_number, col('.'), 1), "name") =~ 'String\|Comment'
       continue
     endif
