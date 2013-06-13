@@ -1,7 +1,7 @@
 " Vim filetype detection file
 " Language:	Kink (http://code.google.com/p/kink-lang/)
 " Maintainer:	Miyakawa Taku <miyakawa.taku@gmail.com>
-" Last Change:  2013-02-05
+" Last Change:  2013-06-13
 
 " Copyright (c) 2013 Miyakawa Taku
 " 
@@ -30,7 +30,7 @@ autocmd BufRead,BufNewFile * silent call s:DetectKink()
 
 function s:DetectKink()
   if expand('%') =~ '\.kn$' || getline(1) =~ '#!.*\<kink\>'
-    setfiletype kink
+    setlocal filetype=kink
   endif
 endfunction
 
