@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language:	Kink (http://code.google.com/p/kink-lang/)
 " Maintainer:	Miyakawa Taku <miyakawa.taku@gmail.com>
-" Last Change:	2013-05-26
+" Last Change:	2013-10-06
 
 " Copyright (c) 2013 Miyakawa Taku
 " 
@@ -31,8 +31,8 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-syntax match kinkVerb "[a-z][a-zA-Z_0-9?]*"
-syntax match kinkNoun "[A-Z_][a-zA-Z_0-9?]*"
+syntax match kinkVerb "[a-z_][a-zA-Z_0-9?]*"
+syntax match kinkNoun "[A-Z][a-zA-Z_0-9?]*"
 syntax keyword kinkTodo contained TODO FIXME XXX
 syntax match kinkComment "#.*" contains=kinkTodo
 syntax region kinkString start=+%\?'+ skip=+''+ end=+'+
