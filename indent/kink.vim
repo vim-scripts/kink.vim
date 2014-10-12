@@ -1,9 +1,9 @@
 " Vim indent file for Kink
 " Language:	Kink (http://code.google.com/p/kink-lang/)
 " Maintainer:	Miyakawa Taku <miyakawa.taku@gmail.com>
-" Last Change:  2013-06-13
+" Last Change:  2014-10-12
 
-" Copyright (c) 2013 Miyakawa Taku
+" Copyright (c) 2014 Miyakawa Taku
 " 
 " Permission is hereby granted, free of charge, to any person obtaining a copy
 " of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ setlocal nolisp
 setlocal autoindent
 
 setlocal indentexpr=GetKinkIndent(v:lnum)
-setlocal indentkeys=0},0),0=],!^F,o,O
+setlocal indentkeys=0},0),0=],0=*),0=*],!^F,o,O
 
 " Defines the function only once.
 if exists("*GetKinkIndent")
@@ -62,8 +62,8 @@ function! GetKinkIndent(line_number)
 
   " Closing a paren/brace/brancket?
   let cur_line = getline(a:line_number)
-  if cur_line =~ '^\s*\(}\|]\|)\)'
-    let opening_pattern = (cur_line =~ '^\s*}' ? '{' : cur_line =~ '^\s*]' ? '\[' : '(')
+  if cur_line =~ '^\s*\(}\|\*\?]\|\*\?)\)'
+    let opening_pattern = (cur_line =~ '^\s*}' ? '{' : cur_line =~ '^\s*\*\?]' ? '\[' : '(')
     let closing_pattern = (opening_pattern == '{' ? '}' : opening_pattern == '\[' ? ']' : ')')
     call cursor(a:line_number, 1)
     let open_line_number = searchpair(opening_pattern, '', closing_pattern, 'bnW', skip)

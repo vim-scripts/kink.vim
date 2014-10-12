@@ -1,9 +1,9 @@
 " Vim syntax file
 " Language:	Kink (http://code.google.com/p/kink-lang/)
 " Maintainer:	Miyakawa Taku <miyakawa.taku@gmail.com>
-" Last Change:	2013-10-06
+" Last Change:	2014-10-12
 
-" Copyright (c) 2013 Miyakawa Taku
+" Copyright (c) 2013- Miyakawa Taku
 " 
 " Permission is hereby granted, free of charge, to any person obtaining a copy
 " of this software and associated documentation files (the "Software"), to deal
@@ -35,8 +35,8 @@ syntax match kinkVerb "[a-z_][a-zA-Z_0-9?]*"
 syntax match kinkNoun "[A-Z][a-zA-Z_0-9?]*"
 syntax keyword kinkTodo contained TODO FIXME XXX
 syntax match kinkComment "#.*" contains=kinkTodo
-syntax region kinkString start=+%\?'+ skip=+''+ end=+'+
-syntax region kinkString start=+%\?"+ skip=+\\.+ end=+"+ contains=kinkStringEscape
+syntax region kinkString start=+'+ skip=+''+ end=+'+
+syntax region kinkString start=+"+ skip=+\\.+ end=+"+ contains=kinkStringEscape
 syntax match kinkStringEscape contained +\\[0tnrabefv"\\]\|\\u[0-9a-f]\{4}\|\\U[0-9a-f]\{6}+
 syntax match kinkPseudoVariable "\\\(env\|recv\|args\|[0-9][0-9_]*\|0x[0-9a-f_]*\|0b[01_]*\)\>"
 syntax match kinkInteger "0x[0-9a-f_]*\|0b[01_]*\|[0-9][0-9_]*"
