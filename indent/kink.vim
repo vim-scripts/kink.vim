@@ -1,7 +1,7 @@
 " Vim indent file for Kink
 " Language:	Kink (http://code.google.com/p/kink-lang/)
 " Maintainer:	Miyakawa Taku <miyakawa.taku@gmail.com>
-" Last Change:  2014-10-12
+" Last Change:  2014-10-18
 
 " Copyright (c) 2014 Miyakawa Taku
 " 
@@ -60,7 +60,7 @@ function! GetKinkIndent(line_number)
   let prev_indent = indent(prev_line_number)
   let skip = 'has("syntax_items") && synIDattr(synID(line("."), col("."), 1), "name") =~ "String\\|Comment"'
 
-  " Closing a paren/brace/brancket?
+  " Does the current line close a paren/brace/brancket?
   let cur_line = getline(a:line_number)
   if cur_line =~ '^\s*\(}\|\*\?]\|\*\?)\)'
     let opening_pattern = (cur_line =~ '^\s*}' ? '{' : cur_line =~ '^\s*\*\?]' ? '\[' : '(')
@@ -70,7 +70,7 @@ function! GetKinkIndent(line_number)
     return (open_line_number > 0 ? indent(open_line_number) : prev_indent)
   endif
 
-  " Opening a paren/brace/brancket?
+  " Does the previous line open a paren/brace/brancket?
   call cursor(prev_line_number, 1)
   let search_option =  'cW'
   while search('{\|\[\|(', search_option, prev_line_number) > 0
@@ -84,6 +84,22 @@ function! GetKinkIndent(line_number)
     if searchpair(opening_pattern, '', closing_pattern, 'W', skip) != prev_line_number
       return prev_indent + &shiftwidth
     endif
+  endwhile
+
+  " Does the previous line close a paren/brace/brancket?
+  call cursor(prev_line_number, 999999)
+  let search_option =  'cbW'
+  while search('}\|]\|)', search_option, prev_line_number) > 0
+    let search_option = 'bW'
+    if has('syntax_items') && synIDattr(synID(prev_line_number, col('.'), 1), "name") =~ 'String\|Comment'
+      continue
+    endif
+    let closing_pattern = getline(line('.'))[col('.') - 1]
+    let opening_pattern = (closing_pattern == '}' ? '{' : closing_pattern == ']' ? '\[' : '(')
+    let opening_line_number = searchpair(opening_pattern, '', closing_pattern, 'bW', skip)
+    if opening_line_number != prev_line_number
+      return indent(opening_line_number)
+    end
   endwhile
 
   return prev_indent
