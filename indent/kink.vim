@@ -1,9 +1,9 @@
 " Vim indent file for Kink
 " Language:	Kink (http://code.google.com/p/kink-lang/)
 " Maintainer:	Miyakawa Taku <miyakawa.taku@gmail.com>
-" Last Change:  2014-10-18
+" Last Change:  2014-10-23
 
-" Copyright (c) 2014 Miyakawa Taku
+" Copyright (c) 2013- Miyakawa Taku
 " 
 " Permission is hereby granted, free of charge, to any person obtaining a copy
 " of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@ set cpo&vim
 " Returns the indent
 function! GetKinkIndent(line_number)
   " No indent in a string
-  if has('syntax_items') && synIDattr(synID(a:line_number, 0, 1), "name") =~ "String"
+  if has('syntax_items') && synIDattr(synID(a:line_number, 1, 1), "name") =~ "String"
     return -1
   endif
 
